@@ -1,23 +1,28 @@
+const cell = 2;
+
 export default class Maths {
   constructor(name, type) {
     this.name = name;
     this.type = type;
     this.health = 100;
     this.level = 1;
+    this._stoned = false; // по умолчанию
   }
 
-  set attack(cell) {
-    const attack = (this.defaultAttack + 10) - 10 * cell;
-    this._attack = Math.round(attack - Math.log2(cell) * 5);
-    this._attack = this._attack < 0 ? 0 : this._attack;
+  set attack(attack) {
+    this._attack = attack;
   }
 
   get attack() {
-    return this._attack;
+    let resultAttack = (this._attack + 10) - 10 * cell;
+    if (this._stoned) {
+      resultAttack = Math.round(resultAttack - Math.log2(cell) * 5);
+    }
+    return resultAttack < 0 ? 0 : resultAttack;
   }
 
-  set stoned(cell) {
-    this._stoned = Math.round(Math.log2(cell) * 5);
+  set stoned(stoned) {
+    this._stoned = stoned;
   }
 
   get stoned() {
